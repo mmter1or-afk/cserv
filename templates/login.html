@@ -1,18 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Вход{% endblock %}
+{% block title %}Login{% endblock %}
 {% block content %}
 <div class="auth-card">
-    <h2>Вход в аккаунт</h2>
+    <h2>Login to Account</h2>
     {% if error %}<div class="error">{{ error }}</div>{% endif %}
     <form method="POST">
         <div class="input-group">
-            <input type="text" name="username" placeholder="Логин" required>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required minlength="3" maxlength="32">
         </div>
         <div class="input-group">
-            <input type="password" name="password" placeholder="Пароль" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="8" maxlength="128">
         </div>
-        <button type="submit" class="btn-blood">Войти</button>
+        <button type="submit" class="btn-blood">Login</button>
     </form>
-    <p class="auth-link">Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+    <p class="auth-link">Don't have an account? <a href="/register">Register</a></p>
 </div>
 {% endblock %}
