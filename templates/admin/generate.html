@@ -1,18 +1,26 @@
 {% extends "base.html" %}
-{% block title %}Генерация ключа{% endblock %}
+{% block title %}Generate Key{% endblock %}
 {% block content %}
 <div class="auth-card">
-    <h2>Новый ключ</h2>
+    <h2>Generate Access Key</h2>
     {% if key %}
-        <div class="success">Ключ: <strong>{{ key }}</strong> ({{ days }} дн.)</div>
-        <a href="/admin/panel">Назад</a>
+        <div class="success">
+            <p>Key Created Successfully!</p>
+            <p>Key: <strong><code>{{ key }}</code></strong></p>
+            <p>Duration: {{ days }} days</p>
+            <p style="font-size: 0.9rem; color: #aaa; margin-top: 1rem;">Copy this key and share it with users for registration.</p>
+        </div>
+        <a href="/admin/panel" class="btn-blood" style="margin-top: 1rem;">Back to Panel</a>
     {% else %}
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
         <form method="POST">
             <div class="input-group">
-                <input type="number" name="days" placeholder="Срок (дней)" required>
+                <label for="days">Duration (days)</label>
+                <input type="number" id="days" name="days" placeholder="Number of days" required min="1" max="3650" value="30">
             </div>
-            <button type="submit" class="btn-blood">Создать</button>
+            <button type="submit" class="btn-blood">Create Key</button>
         </form>
+        <a href="/admin/panel">Back</a>
     {% endif %}
 </div>
 {% endblock %}
