@@ -1,45 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Hades – Мощный чит для CS2{% endblock %}
+{% block title %}Hades — портал доступа{% endblock %}
 {% block content %}
-<section class="hero">
-    <h1 class="fade-in">Добро пожаловать в <span class="blood-text">Hades</span></h1>
-    <p class="subtitle">Профессиональное программное обеспечение для Counter-Strike 2 с уникальной гибридной архитектурой</p>
+<section class="hero-grid">
+  <div>
+    <p class="eyebrow">Закрытый кабинет</p>
+    <h1>Аккаунт, подписка и файлы доступа в одном спокойном интерфейсе.</h1>
+    <p class="lead">Портал обслуживает регистрацию по ключу, проверку активной подписки, привязку устройства и обмен сообщениями между участниками.</p>
+    <div class="hero-actions"><a class="button primary" href="/register">Создать аккаунт</a><a class="button secondary" href="/login">Войти</a></div>
+  </div>
+  <aside class="status-card" aria-label="Возможности портала">
+    <div><span class="status-dot"></span>Регистрация по одноразовому ключу</div>
+    <div><span class="status-dot"></span>Проверка срока подписки</div>
+    <div><span class="status-dot"></span>Привязка HWID при первом запуске</div>
+  </aside>
 </section>
-
-<section class="advantages">
-    <div class="adv-card">
-        <div class="adv-icon">⚡</div>
-        <h3>Internal Чит</h3>
-        <p>Максимальная производительность и глубокий доступ к игре.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">🔗</div>
-        <h3>IE Hybrid (External + Internal)</h3>
-        <p>Рендер вынесен в оверлей, логика внутри игры – безопасность и гибкость.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">🎯</div>
-        <h3>Aimbot и RCS</h3>
-        <p>Точный аим с настройкой плавности и контролем отдачи.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">👁️</div>
-        <h3>ESP / Wallhack</h3>
-        <p>Полная настройка визуальных элементов: боксы, здоровье, оружие.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">🎨</div>
-        <h3>Skin Changer</h3>
-        <p>Меняйте скины в реальном времени без риска блокировки инвентаря.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">🛡️</div>
-        <h3>Обход VAC и Vanguard</h3>
-        <p>Продвинутая защита, регулярные обновления, поддержка Faceit/ESEA.</p>
-    </div>
+<section class="feature-grid" aria-labelledby="features-title">
+  <h2 id="features-title">Что уже есть в системе</h2>
+  <article><span>01</span><h3>Личный кабинет</h3><p>Показывает срок доступа, количество оставшихся дней, статус HWID и данные профиля.</p></article>
+  <article><span>02</span><h3>Профиль участника</h3><p>Можно задать отображаемое имя и загрузить аватар в безопасных форматах изображений.</p></article>
+  <article><span>03</span><h3>Общий чат</h3><p>Встроенный чат помогает участникам оставаться на связи прямо из кабинета.</p></article>
+  <article><span>04</span><h3>Администрирование</h3><p>Админ-панель показывает пользователей, ключи доступа и позволяет выпускать новые ключи.</p></article>
 </section>
-
-<div class="dev-banner">
-    <p>В разработке: полноценный Internal чит для CS2 с нуля.</p>
-</div>
 {% endblock %}

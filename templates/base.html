@@ -3,30 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Hades Cheat{% endblock %}</title>
+    <meta name="description" content="Закрытый портал Hades для регистрации по ключу, управления подпиской, профилем и общим чатом участников.">
+    <meta property="og:title" content="Hades Access Portal">
+    <meta property="og:description" content="Портал доступа с регистрацией по ключу, профилем, статусом подписки и чатом.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{% block title %}Hades Access Portal{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <a href="/" class="logo">Hades</a>
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+    <header class="site-header">
+        <nav class="nav" aria-label="Основная навигация">
+            <a href="/" class="brand"><span class="brand-mark">H</span><span>Hades</span></a>
             <div class="nav-links">
-                <a href="/">Главная</a>
+                <a href="/">Обзор</a>
                 {% if session.user_id %}
-                    <a href="/panel">Личный кабинет</a>
-                    <a href="/logout">Выйти</a>
+                    <a href="/panel">Кабинет</a>
+                    <form method="POST" action="/logout" class="inline-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="link-button" type="submit">Выйти</button></form>
                 {% else %}
-                    <a href="/login">Вход</a>
-                    <a href="/register">Регистрация</a>
+                    <a href="/login">Вход</a><a class="nav-cta" href="/register">Регистрация</a>
                 {% endif %}
             </div>
         </nav>
     </header>
-    <main class="container">
-        {% block content %}{% endblock %}
-    </main>
-    <footer>
-        <p>&copy; 2025 Hades. Все права защищены.</p>
-    </footer>
+    <main id="main" class="page-shell">{% block content %}{% endblock %}</main>
+    <footer class="footer"><p>Hades Access Portal. Закрытая зона для действующих участников.</p></footer>
 </body>
 </html>

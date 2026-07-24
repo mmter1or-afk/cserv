@@ -1,18 +1,1 @@
-{% extends "base.html" %}
-{% block title %}Генерация ключа{% endblock %}
-{% block content %}
-<div class="auth-card">
-    <h2>Новый ключ</h2>
-    {% if key %}
-        <div class="success">Ключ: <strong>{{ key }}</strong> ({{ days }} дн.)</div>
-        <a href="/admin/panel">Назад</a>
-    {% else %}
-        <form method="POST">
-            <div class="input-group">
-                <input type="number" name="days" placeholder="Срок (дней)" required>
-            </div>
-            <button type="submit" class="btn-blood">Создать</button>
-        </form>
-    {% endif %}
-</div>
-{% endblock %}
+{% extends "base.html" %}{% block title %}Новый ключ — Hades{% endblock %}{% block content %}<section class="auth-card narrow"><h1>Новый ключ</h1>{% if key %}<div class="alert success">Ключ: <strong>{{ key }}</strong> · {{ days }} дн.</div><a class="button secondary full" href="/admin/panel">Вернуться</a>{% else %}{% if error %}<div class="alert error">{{ error }}</div>{% endif %}<form method="POST" class="stack-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Срок, дней<input type="number" name="days" min="1" max="3650" required></label><button type="submit" class="button primary full">Создать</button></form>{% endif %}</section>{% endblock %}

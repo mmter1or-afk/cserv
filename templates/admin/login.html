@@ -1,17 +1,1 @@
-{% extends "base.html" %}
-{% block title %}Админ-панель{% endblock %}
-{% block content %}
-<div class="auth-card">
-    <h2>Администрирование</h2>
-    {% if error %}<div class="error">{{ error }}</div>{% endif %}
-    <form method="POST">
-        <div class="input-group">
-            <input type="text" name="username" placeholder="Логин" required>
-        </div>
-        <div class="input-group">
-            <input type="password" name="password" placeholder="Пароль" required>
-        </div>
-        <button type="submit" class="btn-blood">Войти</button>
-    </form>
-</div>
-{% endblock %}
+{% extends "base.html" %}{% block title %}Администрирование — Hades{% endblock %}{% block content %}<form method="POST" class="auth-card narrow"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><h1>Администрирование</h1>{% if not admin_configured %}<div class="alert error">Задайте ADMIN_PASS в окружении перед входом.</div>{% endif %}{% if error %}<div class="alert error">{{ error }}</div>{% endif %}<label>Логин<input type="text" name="username" autocomplete="username" required></label><label>Пароль<input type="password" name="password" autocomplete="current-password" required></label><button class="button primary full" type="submit">Войти</button></form>{% endblock %}
