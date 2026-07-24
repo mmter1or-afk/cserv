@@ -1,58 +1,75 @@
 {% extends "base.html" %}
-{% block title %}Hades — портал доступа{% endblock %}
+{% block title %}Hades — premium access platform{% endblock %}
 {% block content %}
 <section class="landing-hero reveal">
-    <div class="hero-kicker"><span></span> Закрытый портал</div>
-    <div class="hero-layout">
+    <div class="hero-grid-premium">
         <div class="hero-copy">
-            <h1>Тихое рабочее пространство для аккаунта, доступа и поддержки.</h1>
-            <p class="lead">Hades объединяет регистрацию по ключу, статус подписки, привязку устройства, профиль участника и общий чат в одном аккуратном кабинете.</p>
+            <div class="hero-kicker"><span></span> Closed access platform</div>
+            <h1>Precision tools, controlled access, disciplined interface.</h1>
+            <p class="lead">Hades brings product access, account state, device binding, profile controls and participant chat into a dark, focused portal.</p>
             <div class="hero-actions">
-                <a class="button button-dark" href="/register">Создать аккаунт</a>
-                <a class="button button-plain" href="/login">У меня есть доступ</a>
+                <a class="button button-red" href="/register">Activate access</a>
+                <a class="button button-ghost" href="/login">Open dashboard</a>
             </div>
         </div>
-        <aside class="access-card" aria-label="Состояние портала">
-            <div class="access-card-top">
-                <span class="mono-label">PORTAL</span>
-                <span class="pill is-live">Доступ по ключу</span>
+        <aside class="command-panel" aria-label="Access overview">
+            <div class="panel-chrome"><span></span><span></span><span></span></div>
+            <div class="command-status">
+                <span class="status-pulse"></span>
+                <div><strong>Portal online</strong><small>Key-based account activation</small></div>
             </div>
-            <div class="access-meter" aria-hidden="true"><span></span></div>
-            <dl class="access-list">
-                <div><dt>Регистрация</dt><dd>Одноразовый ключ</dd></div>
-                <div><dt>Проверка</dt><dd>Активная подписка</dd></div>
-                <div><dt>Устройство</dt><dd>HWID при первом входе</dd></div>
+            <dl class="command-list">
+                <div><dt>Session</dt><dd>CSRF protected</dd></div>
+                <div><dt>Profile</dt><dd>Avatar + display name</dd></div>
+                <div><dt>Device</dt><dd>HWID binding</dd></div>
+                <div><dt>Support</dt><dd>Member chat</dd></div>
             </dl>
         </aside>
     </div>
 </section>
 
-<section class="workflow-section reveal" aria-labelledby="workflow-title">
-    <div class="section-intro">
-        <p class="eyebrow">Сценарии</p>
-        <h2 id="workflow-title">Интерфейс построен вокруг реальных действий.</h2>
+<section class="product-section reveal" aria-labelledby="products-title">
+    <div class="section-intro split">
+        <div>
+            <p class="eyebrow">Products</p>
+            <h2 id="products-title">Three access tracks. One control surface.</h2>
+        </div>
+        <p>Each product card is intentionally concise: the portal manages access and account workflows while keeping product presentation focused.</p>
     </div>
-    <div class="workflow-grid">
-        <article class="workflow-item">
-            <span class="item-index">01</span>
-            <h3>Получить аккаунт</h3>
-            <p>Участник вводит логин, пароль и действующий ключ доступа. После активации ключ закрепляется за аккаунтом.</p>
+    <div class="product-grid">
+        <article class="product-card rust-card">
+            <div class="product-icon" aria-hidden="true">RI</div>
+            <div><p class="mono-label">Rust</p><h3>Rust Internal</h3></div>
+            <p>Internal access track with account-based activation, subscription visibility and member profile controls.</p>
+            <span class="product-line"></span>
         </article>
-        <article class="workflow-item">
-            <span class="item-index">02</span>
-            <h3>Проверить состояние</h3>
-            <p>Кабинет показывает дату окончания подписки, остаток дней и статус привязки устройства.</p>
+        <article class="product-card hybrid-card">
+            <div class="product-icon" aria-hidden="true">IE</div>
+            <div><p class="mono-label">Rust</p><h3>Rust IE Hybrid</h3></div>
+            <p>Hybrid access track represented in the same portal, with centralized key redemption and account state management.</p>
+            <span class="product-line"></span>
         </article>
-        <article class="workflow-item">
-            <span class="item-index">03</span>
-            <h3>Настроить профиль</h3>
-            <p>Можно обновить отображаемое имя и загрузить аватар, чтобы сообщения в чате были узнаваемыми.</p>
+        <article class="product-card cs-card">
+            <div class="product-icon" aria-hidden="true">C2</div>
+            <div><p class="mono-label">CS2</p><h3>CS2 Internal</h3></div>
+            <p>CS2 access track connected to the existing authentication, HWID binding and file access workflow.</p>
+            <span class="product-line"></span>
         </article>
-        <article class="workflow-item">
-            <span class="item-index">04</span>
-            <h3>Общаться</h3>
-            <p>Встроенный чат доступен из кабинета и отдельной страницы, без лишних переходов.</p>
-        </article>
+    </div>
+</section>
+
+<section class="technical-section reveal" aria-labelledby="technical-title">
+    <div class="section-intro split">
+        <div>
+            <p class="eyebrow">Technical overview</p>
+            <h2 id="technical-title">Built around operational flows, not noise.</h2>
+        </div>
+    </div>
+    <div class="technical-grid">
+        <article><span class="line-icon"></span><h3>Access lifecycle</h3><p>One-time keys create accounts, assign subscription duration and record redemption state for administration.</p></article>
+        <article><span class="line-icon"></span><h3>Account dashboard</h3><p>Members can review subscription expiry, remaining days, HWID status and profile identity in one view.</p></article>
+        <article><span class="line-icon"></span><h3>Profile layer</h3><p>Display names and avatars give the chat and dashboard a consistent identity without exposing extra account data.</p></article>
+        <article><span class="line-icon"></span><h3>Admin surface</h3><p>Operators can inspect users, review keys and create new durations from a dedicated panel.</p></article>
     </div>
 </section>
 {% endblock %}
