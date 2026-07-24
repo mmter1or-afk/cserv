@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Error{% endblock %}
+{% block content %}
+<div class="error-container" style="text-align: center; padding: 2rem;">
+    <h2>⚠️ Error</h2>
+    <p style="color: #ff5555; font-size: 1.1rem;">{{ error }}</p>
+    <a href="/" class="btn-blood" style="display: inline-block; margin-top: 1rem;">Return to Home</a>
+</div>
+{% endblock %}
