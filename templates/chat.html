@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Глобальный чат{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Общий чат</h2>
+    <div id="chat-box" class="chat-box"></div>
+    <div class="chat-input">
+        <input type="text" id="message-input" placeholder="Введите сообщение...">
+        <button class="btn" id="send-btn">Отправить</button>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

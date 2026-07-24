@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Личный кабинет{% endblock %}
+{% block content %}
+<div class="profile-card">
+    <div class="profile-header">
+        <img src="{{ url_for('static', filename=avatar) }}" class="avatar-large" alt="avatar">
+        <div class="profile-info">
+            <h2>{{ display_name }}</h2>
+            <p>Подписка до: {{ expiry_str }} ({{ days_left }} дн.)</p>
+            <p>HWID: {{ hwid }}</p>
+        </div>
+    </div>
+    <form action="/panel/update" method="POST" enctype="multipart/form-data" class="profile-edit">
+        <div class="input-group">
+            <label>Отображаемое имя</label>
+            <input type="text" name="display_name" value="{{ display_name }}" placeholder="Уникальное имя">
+        </div>
+        <div class="input-group">
+            <label>Сменить аватар</label>
+            <input type="file" name="avatar" accept="image/*">
+        </div>
+        <button type="submit" class="btn-blood">Сохранить</button>
+    </form>
+</div>
+
+<div class="chat-section">
+    <div class="chat-header" onclick="toggleChat()">
+        <h3>Общий чат</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div id="chat-container" class="chat-container">
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input-row">
+            <input type="text" id="message-input" placeholder="Введите сообщение...">
+            <button id="send-btn" class="btn-blood">Отправить</button>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

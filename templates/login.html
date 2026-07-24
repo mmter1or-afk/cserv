@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<div class="auth-card">
+    <h2>Вход в аккаунт</h2>
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    <form method="POST">
+        <div class="input-group">
+            <input type="text" name="username" placeholder="Логин" required>
+        </div>
+        <div class="input-group">
+            <input type="password" name="password" placeholder="Пароль" required>
+        </div>
+        <button type="submit" class="btn-blood">Войти</button>
+    </form>
+    <p class="auth-link">Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+</div>
+{% endblock %}

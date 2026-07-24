@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Админ-панель{% endblock %}
+{% block content %}
+<div class="admin-panel">
+    <div class="flex-between">
+        <h2>Управление</h2>
+        <a href="/admin/logout" class="btn-outline">Выйти</a>
+    </div>
+    <h3>Пользователи</h3>
+    <table>
+        <tr><th>ID</th><th>Логин</th><th>HWID</th><th>Истекает</th><th>Дней</th></tr>
+        {% for u in users %}
+        <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.hwid or '—' }}</td>
+            <td>{{ (u.subscription_expiry|int)|datetime('%d.%m.%Y') }}</td>
+            <td>{{ [((u.subscription_expiry - now)//86400),0]|max }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Ключи</h3>
+    <table>
+        <tr><th>Ключ</th><th>Дней</th><th>Использован</th></tr>
+        {% for k in keys %}
+        <tr>
+            <td>{{ k.key }}</td>
+            <td>{{ k.duration_days }}</td>
+            <td>{{ k.used_by or 'Нет' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/admin/generate" class="btn-blood" style="margin-top:1rem;">Сгенерировать ключ</a>
+</div>
+{% endblock %}

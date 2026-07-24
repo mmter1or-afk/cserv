@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Генерация ключа{% endblock %}
+{% block content %}
+<div class="auth-card">
+    <h2>Новый ключ</h2>
+    {% if key %}
+        <div class="success">Ключ: <strong>{{ key }}</strong> ({{ days }} дн.)</div>
+        <a href="/admin/panel">Назад</a>
+    {% else %}
+        <form method="POST">
+            <div class="input-group">
+                <input type="number" name="days" placeholder="Срок (дней)" required>
+            </div>
+            <button type="submit" class="btn-blood">Создать</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

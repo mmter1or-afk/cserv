@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+<div class="auth-card">
+    <h2>Создание аккаунта</h2>
+    <form id="regForm">
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Логин" required>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Пароль" required>
+        </div>
+        <div class="input-group">
+            <input type="text" id="key" placeholder="Ключ доступа" required>
+        </div>
+        <button type="submit" class="btn-blood">Зарегистрироваться</button>
+        <div id="msg" class="msg"></div>
+    </form>
+    <p class="auth-link">Уже есть аккаунт? <a href="/login">Войти</a></p>
+</div>
+<script>
+document.getElementById('regForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('msg');
+    msg.className = '';
+    msg.textContent = 'Регистрация...';
+    const res = await fetch('/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value,
+            key: document.getElementById('key').value
+        })
+    });
+    const data = await res.json();
+    if (data.error) {
+        msg.className = 'error';
+        msg.textContent = 'Ошибка: ' + data.error;
+    } else {
+        msg.className = 'success';
+        msg.textContent = 'Успешно! Теперь войдите.';
+    }
+});
+</script>
