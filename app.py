@@ -49,6 +49,13 @@ ALLOWED_AVATAR_MIMES = {
 logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO"))
 
 
+def env_flag(name: str, default: bool = False) -> bool:
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
 def _load_secret_key() -> str:
     env_key = os.environ.get("SECRET_KEY")
     if env_key:
@@ -71,8 +78,11 @@ app.config.update(
     MAX_CONTENT_LENGTH=2 * 1024 * 1024,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=os.environ.get("SESSION_COOKIE_SECURE", "true").lower()
-    == "true",
+    # CSRF tokens are stored in Flask's signed session cookie. A Secure
+    # cookie is correct behind HTTPS, but it is not sent by browsers over
+    # plain HTTP; default to local/proxy-safe behavior and let production
+    # deployments opt in with SESSION_COOKIE_SECURE=true.
+    SESSION_COOKIE_SECURE=env_flag("SESSION_COOKIE_SECURE", False),
     PERMANENT_SESSION_LIFETIME=60 * 60 * 8,
 )
 
@@ -148,6 +158,14 @@ def csrf_token() -> str:
         token = secrets.token_urlsafe(32)
         session["csrf_token"] = token
     return token
+
+
+def reset_session(**values: Any) -> None:
+    """Start a fresh browser session while immediately issuing a CSRF token."""
+    session.clear()
+    session.permanent = True
+    session.update(values)
+    session["csrf_token"] = secrets.token_urlsafe(32)
 
 
 app.jinja_env.globals["csrf_token"] = csrf_token
@@ -341,9 +359,7 @@ def login():
             "SELECT * FROM users WHERE username = ?", (username,)
         ).fetchone()
         if user and bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
-            session.clear()
-            session.permanent = True
-            session["user_id"] = user["id"]
+            reset_session(user_id=user["id"])
             return redirect(url_for("panel"))
         return render_template("login.html", error="Неверный логин или пароль")
     return render_template("login.html")
@@ -469,9 +485,7 @@ def admin_login():
             and request.form.get("username") == ADMIN_USER
             and secrets.compare_digest(request.form.get("password", ""), ADMIN_PASS)
         ):
-            session.clear()
-            session.permanent = True
-            session["admin"] = True
+            reset_session(admin=True)
             return redirect(url_for("admin_panel"))
         return render_template("admin/login.html", error="Неверные данные")
     return render_template("admin/login.html", admin_configured=bool(ADMIN_PASS))
