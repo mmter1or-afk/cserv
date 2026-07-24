@@ -1,45 +1,75 @@
 {% extends "base.html" %}
-{% block title %}Hades – Мощный чит для CS2{% endblock %}
+{% block title %}Hades — premium access platform{% endblock %}
 {% block content %}
-<section class="hero">
-    <h1 class="fade-in">Добро пожаловать в <span class="blood-text">Hades</span></h1>
-    <p class="subtitle">Профессиональное программное обеспечение для Counter-Strike 2 с уникальной гибридной архитектурой</p>
-</section>
-
-<section class="advantages">
-    <div class="adv-card">
-        <div class="adv-icon">⚡</div>
-        <h3>Internal Чит</h3>
-        <p>Максимальная производительность и глубокий доступ к игре.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">🔗</div>
-        <h3>IE Hybrid (External + Internal)</h3>
-        <p>Рендер вынесен в оверлей, логика внутри игры – безопасность и гибкость.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">🎯</div>
-        <h3>Aimbot и RCS</h3>
-        <p>Точный аим с настройкой плавности и контролем отдачи.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">👁️</div>
-        <h3>ESP / Wallhack</h3>
-        <p>Полная настройка визуальных элементов: боксы, здоровье, оружие.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">🎨</div>
-        <h3>Skin Changer</h3>
-        <p>Меняйте скины в реальном времени без риска блокировки инвентаря.</p>
-    </div>
-    <div class="adv-card">
-        <div class="adv-icon">🛡️</div>
-        <h3>Обход VAC и Vanguard</h3>
-        <p>Продвинутая защита, регулярные обновления, поддержка Faceit/ESEA.</p>
+<section class="landing-hero reveal">
+    <div class="hero-grid-premium">
+        <div class="hero-copy">
+            <div class="hero-kicker"><span></span> Closed access platform</div>
+            <h1>Precision tools, controlled access, disciplined interface.</h1>
+            <p class="lead">Hades brings product access, account state, device binding, profile controls and participant chat into a dark, focused portal.</p>
+            <div class="hero-actions">
+                <a class="button button-red" href="/register">Activate access</a>
+                <a class="button button-ghost" href="/login">Open dashboard</a>
+            </div>
+        </div>
+        <aside class="command-panel" aria-label="Access overview">
+            <div class="panel-chrome"><span></span><span></span><span></span></div>
+            <div class="command-status">
+                <span class="status-pulse"></span>
+                <div><strong>Portal online</strong><small>Key-based account activation</small></div>
+            </div>
+            <dl class="command-list">
+                <div><dt>Session</dt><dd>CSRF protected</dd></div>
+                <div><dt>Profile</dt><dd>Avatar + display name</dd></div>
+                <div><dt>Device</dt><dd>HWID binding</dd></div>
+                <div><dt>Support</dt><dd>Member chat</dd></div>
+            </dl>
+        </aside>
     </div>
 </section>
 
-<div class="dev-banner">
-    <p>В разработке: полноценный Internal чит для CS2 с нуля.</p>
-</div>
+<section class="product-section reveal" aria-labelledby="products-title">
+    <div class="section-intro split">
+        <div>
+            <p class="eyebrow">Products</p>
+            <h2 id="products-title">Three access tracks. One control surface.</h2>
+        </div>
+        <p>Each product card is intentionally concise: the portal manages access and account workflows while keeping product presentation focused.</p>
+    </div>
+    <div class="product-grid">
+        <article class="product-card rust-card">
+            <div class="product-icon" aria-hidden="true">RI</div>
+            <div><p class="mono-label">Rust</p><h3>Rust Internal</h3></div>
+            <p>Internal access track with account-based activation, subscription visibility and member profile controls.</p>
+            <span class="product-line"></span>
+        </article>
+        <article class="product-card hybrid-card">
+            <div class="product-icon" aria-hidden="true">IE</div>
+            <div><p class="mono-label">Rust</p><h3>Rust IE Hybrid</h3></div>
+            <p>Hybrid access track represented in the same portal, with centralized key redemption and account state management.</p>
+            <span class="product-line"></span>
+        </article>
+        <article class="product-card cs-card">
+            <div class="product-icon" aria-hidden="true">C2</div>
+            <div><p class="mono-label">CS2</p><h3>CS2 Internal</h3></div>
+            <p>CS2 access track connected to the existing authentication, HWID binding and file access workflow.</p>
+            <span class="product-line"></span>
+        </article>
+    </div>
+</section>
+
+<section class="technical-section reveal" aria-labelledby="technical-title">
+    <div class="section-intro split">
+        <div>
+            <p class="eyebrow">Technical overview</p>
+            <h2 id="technical-title">Built around operational flows, not noise.</h2>
+        </div>
+    </div>
+    <div class="technical-grid">
+        <article><span class="line-icon"></span><h3>Access lifecycle</h3><p>One-time keys create accounts, assign subscription duration and record redemption state for administration.</p></article>
+        <article><span class="line-icon"></span><h3>Account dashboard</h3><p>Members can review subscription expiry, remaining days, HWID status and profile identity in one view.</p></article>
+        <article><span class="line-icon"></span><h3>Profile layer</h3><p>Display names and avatars give the chat and dashboard a consistent identity without exposing extra account data.</p></article>
+        <article><span class="line-icon"></span><h3>Admin surface</h3><p>Operators can inspect users, review keys and create new durations from a dedicated panel.</p></article>
+    </div>
+</section>
 {% endblock %}

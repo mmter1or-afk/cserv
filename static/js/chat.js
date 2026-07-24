@@ -1,61 +1,102 @@
-// Переменная для хранения состояния чата
-let chatVisible = true;
+(() => {
+  const token = document.querySelector('meta[name="csrf-token"]')?.content || '';
+  const container = document.getElementById('chat-container');
+  const toggle = document.querySelector('.chat-header');
+  const icon = document.querySelector('.toggle-icon');
+  const box = document.getElementById('chat-messages');
+  const input = document.getElementById('message-input');
+  const send = document.getElementById('send-btn');
 
-function toggleChat() {
-    const container = document.getElementById('chat-container');
-    const icon = document.querySelector('.toggle-icon');
-    if (chatVisible) {
-        container.classList.add('collapsed');
-        icon.style.transform = 'rotate(-90deg)';
-        chatVisible = false;
-    } else {
-        container.classList.remove('collapsed');
-        icon.style.transform = 'rotate(0deg)';
-        chatVisible = true;
-    }
-}
+  if (!container || !toggle || !box || !input || !send) return;
 
-async function loadMessages() {
-    if (!chatVisible) return;  // не загружаем, если чат скрыт
-    const res = await fetch('/api/chat/messages');
+  let visible = true;
+  let firstLoad = true;
+
+  const emptyState = () => {
+    const state = document.createElement('div');
+    state.className = 'empty-state';
+    const title = document.createElement('strong');
+    title.textContent = 'Сообщений пока нет';
+    const copy = document.createElement('span');
+    copy.textContent = 'Начните разговор — новые сообщения появятся здесь автоматически.';
+    state.append(title, copy);
+    return state;
+  };
+
+  const appendMessage = (message) => {
+    const row = document.createElement('div');
+    row.className = 'msg';
+
+    const avatar = document.createElement('img');
+    avatar.src = `/static/${message.avatar}`;
+    avatar.alt = '';
+
+    const content = document.createElement('div');
+    content.className = 'msg-content';
+
+    const name = document.createElement('span');
+    name.className = 'name';
+    name.textContent = message.display_name;
+
+    const time = document.createElement('span');
+    time.className = 'time';
+    time.textContent = message.created_at;
+
+    const text = document.createElement('div');
+    text.className = 'text';
+    text.textContent = message.message;
+
+    content.append(name, time, text);
+    row.append(avatar, content);
+    box.append(row);
+  };
+
+  const loadMessages = async () => {
+    if (!visible) return;
+    const res = await fetch('/api/chat/messages', { headers: { Accept: 'application/json' } });
     if (!res.ok) return;
     const messages = await res.json();
-    const box = document.getElementById('chat-messages');
-    box.innerHTML = '';
-    messages.forEach(m => {
-        box.innerHTML += `
-            <div class="msg">
-                <img src="/static/${m.avatar}" alt="avatar">
-                <div class="msg-content">
-                    <span class="name">${m.display_name}</span>
-                    <span class="time">${m.created_at}</span>
-                    <div class="text">${m.message}</div>
-                </div>
-            </div>`;
+    box.replaceChildren();
+    if (!messages.length) {
+      box.append(emptyState());
+    } else {
+      messages.forEach(appendMessage);
+      box.scrollTop = box.scrollHeight;
+    }
+    firstLoad = false;
+  };
+
+  const sendMessage = async () => {
+    const message = input.value.trim();
+    if (!message) return;
+    send.disabled = true;
+    send.textContent = 'Отправка…';
+    const res = await fetch('/api/chat/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
+      body: JSON.stringify({ message }),
     });
-    box.scrollTop = box.scrollHeight;
-}
+    send.disabled = false;
+    send.textContent = 'Отправить';
+    if (res.ok) {
+      input.value = '';
+      await loadMessages();
+    }
+  };
 
-async function sendMessage() {
-    const input = document.getElementById('message-input');
-    const msg = input.value.trim();
-    if (!msg) return;
-    await fetch('/api/chat/send', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({message: msg})
-    });
-    input.value = '';
-    loadMessages();
-}
+  toggle.addEventListener('click', () => {
+    visible = !visible;
+    container.classList.toggle('collapsed', !visible);
+    toggle.setAttribute('aria-expanded', String(visible));
+    if (icon) icon.textContent = visible ? '⌄' : '›';
+    if (visible && firstLoad) loadMessages();
+  });
 
-document.getElementById('send-btn').addEventListener('click', sendMessage);
-document.getElementById('message-input').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendMessage();
-});
+  send.addEventListener('click', sendMessage);
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') sendMessage();
+  });
 
-// Загружаем сообщения каждые 3 секунды, если чат открыт
-setInterval(() => {
-    if (chatVisible) loadMessages();
-}, 3000);
-loadMessages();
+  window.setInterval(loadMessages, 5000);
+  loadMessages();
+})();

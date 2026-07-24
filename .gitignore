@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.env
+instance/
+*.log
+secret_key.txt
+database.db
+static/avatars/user_*.*

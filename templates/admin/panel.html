@@ -1,35 +1,64 @@
 {% extends "base.html" %}
-{% block title %}Админ-панель{% endblock %}
+{% block title %}Панель управления — Hades{% endblock %}
 {% block content %}
-<div class="admin-panel">
-    <div class="flex-between">
-        <h2>Управление</h2>
-        <a href="/admin/logout" class="btn-outline">Выйти</a>
+<section class="admin-shell reveal">
+    <div class="admin-header">
+        <div>
+            <p class="eyebrow">Администрирование</p>
+            <h1>Управление доступом</h1>
+            <p>Пользователи, активированные ключи и выпуск новых сроков подписки.</p>
+        </div>
+        <div class="admin-actions">
+            <a href="/admin/generate" class="button button-dark">Сгенерировать ключ</a>
+            <form method="POST" action="/admin/logout">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="button button-plain" type="submit">Выйти</button>
+            </form>
+        </div>
     </div>
-    <h3>Пользователи</h3>
-    <table>
-        <tr><th>ID</th><th>Логин</th><th>HWID</th><th>Истекает</th><th>Дней</th></tr>
-        {% for u in users %}
-        <tr>
-            <td>{{ u.id }}</td>
-            <td>{{ u.username }}</td>
-            <td>{{ u.hwid or '—' }}</td>
-            <td>{{ (u.subscription_expiry|int)|datetime('%d.%m.%Y') }}</td>
-            <td>{{ [((u.subscription_expiry - now)//86400),0]|max }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <h3>Ключи</h3>
-    <table>
-        <tr><th>Ключ</th><th>Дней</th><th>Использован</th></tr>
-        {% for k in keys %}
-        <tr>
-            <td>{{ k.key }}</td>
-            <td>{{ k.duration_days }}</td>
-            <td>{{ k.used_by or 'Нет' }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <a href="/admin/generate" class="btn-blood" style="margin-top:1rem;">Сгенерировать ключ</a>
-</div>
+
+    <div class="admin-grid">
+        <article class="table-card wide">
+            <div class="table-title"><h2>Пользователи</h2><span>{{ users|length }}</span></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>ID</th><th>Логин</th><th>HWID</th><th>Истекает</th><th>Дней</th></tr></thead>
+                    <tbody>
+                        {% for u in users %}
+                            <tr>
+                                <td>{{ u.id }}</td>
+                                <td>{{ u.username }}</td>
+                                <td class="muted-cell">{{ u.hwid or '—' }}</td>
+                                <td>{{ (u.subscription_expiry|int)|datetime('%d.%m.%Y') }}</td>
+                                <td><span class="pill">{{ [((u.subscription_expiry - now)//86400),0]|max }}</span></td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="5" class="empty-cell">Пользователей пока нет.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+        <article class="table-card">
+            <div class="table-title"><h2>Ключи</h2><span>{{ keys|length }}</span></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Ключ</th><th>Дней</th><th>Использован</th></tr></thead>
+                    <tbody>
+                        {% for k in keys %}
+                            <tr>
+                                <td><code>{{ k.key }}</code></td>
+                                <td>{{ k.duration_days }}</td>
+                                <td class="muted-cell">{{ k.used_by or 'Нет' }}</td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="3" class="empty-cell">Ключей пока нет.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
 {% endblock %}

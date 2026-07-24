@@ -1,40 +1,57 @@
 {% extends "base.html" %}
-{% block title %}Личный кабинет{% endblock %}
+{% block title %}Кабинет — Hades{% endblock %}
 {% block content %}
-<div class="profile-card">
-    <div class="profile-header">
-        <img src="{{ url_for('static', filename=avatar) }}" class="avatar-large" alt="avatar">
-        <div class="profile-info">
-            <h2>{{ display_name }}</h2>
-            <p>Подписка до: {{ expiry_str }} ({{ days_left }} дн.)</p>
-            <p>HWID: {{ hwid }}</p>
+<section class="dashboard-hero reveal">
+    <div class="identity-block">
+        <img src="{{ url_for('static', filename=avatar) }}" class="avatar-large" alt="Аватар {{ display_name }}">
+        <div>
+            <p class="eyebrow">Личный кабинет</p>
+            <h1>{{ display_name }}</h1>
+            <p>Подписка до {{ expiry_str }} · осталось {{ days_left }} дн.</p>
         </div>
     </div>
-    <form action="/panel/update" method="POST" enctype="multipart/form-data" class="profile-edit">
-        <div class="input-group">
-            <label>Отображаемое имя</label>
-            <input type="text" name="display_name" value="{{ display_name }}" placeholder="Уникальное имя">
-        </div>
-        <div class="input-group">
-            <label>Сменить аватар</label>
-            <input type="file" name="avatar" accept="image/*">
-        </div>
-        <button type="submit" class="btn-blood">Сохранить</button>
-    </form>
-</div>
+    <div class="dashboard-summary" aria-label="Краткая сводка">
+        <div><span>{{ days_left }}</span><small>дней доступа</small></div>
+        <div><span>{{ hwid }}</span><small>HWID</small></div>
+    </div>
+</section>
 
-<div class="chat-section">
-    <div class="chat-header" onclick="toggleChat()">
-        <h3>Общий чат</h3>
-        <span class="toggle-icon">▼</span>
-    </div>
-    <div id="chat-container" class="chat-container">
-        <div id="chat-messages" class="chat-messages"></div>
-        <div class="chat-input-row">
-            <input type="text" id="message-input" placeholder="Введите сообщение...">
-            <button id="send-btn" class="btn-blood">Отправить</button>
+<section class="dashboard-layout reveal">
+    <aside class="profile-panel">
+        <div class="panel-title">
+            <span class="line-icon" aria-hidden="true">⌁</span>
+            <h2>Профиль</h2>
         </div>
-    </div>
-</div>
-<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+        <dl class="detail-list">
+            <div><dt>Логин</dt><dd>{{ user.username }}</dd></div>
+            <div><dt>Отображается как</dt><dd>{{ display_name }}</dd></div>
+            <div><dt>Устройство</dt><dd>{{ hwid }}</dd></div>
+        </dl>
+        <form action="/panel/update" method="POST" enctype="multipart/form-data" class="stack-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label class="field">Отображаемое имя<input type="text" name="display_name" value="{{ display_name }}" maxlength="40"></label>
+            <label class="field file-field">Аватар<input type="file" name="avatar" accept="image/png,image/jpeg,image/gif"><span>PNG, JPG или GIF</span></label>
+            <button type="submit" class="button button-plain full">Сохранить изменения</button>
+        </form>
+    </aside>
+
+    <article class="chat-panel">
+        <button class="chat-header" type="button" aria-controls="chat-container" aria-expanded="true">
+            <span><strong>Общий чат</strong><small>Сообщения участников</small></span>
+            <span class="toggle-icon" aria-hidden="true">⌄</span>
+        </button>
+        <div id="chat-container" class="chat-container">
+            <div id="chat-messages" class="chat-messages" aria-live="polite">
+                <div class="skeleton-message"><span></span><div></div></div>
+                <div class="skeleton-message short"><span></span><div></div></div>
+            </div>
+            <div class="chat-input-row">
+                <label class="sr-only" for="message-input">Сообщение</label>
+                <input type="text" id="message-input" maxlength="800" placeholder="Напишите сообщение">
+                <button id="send-btn" class="button button-dark" type="button">Отправить</button>
+            </div>
+        </div>
+    </article>
+</section>
+<script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
 {% endblock %}
