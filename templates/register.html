@@ -1,3 +1,24 @@
 {% extends "base.html" %}
 {% block title %}Регистрация — Hades{% endblock %}
-{% block content %}<section class="auth-layout"><div class="auth-copy"><p class="eyebrow">Ключ доступа</p><h1>Создайте аккаунт только с действующим ключом.</h1><p>Логин должен быть уникальным. Пароль — не короче восьми символов.</p></div><form id="regForm" class="auth-card"><h2>Регистрация</h2><label>Логин<input type="text" id="username" autocomplete="username" pattern="[A-Za-z0-9_.-]{3,32}" required></label><label>Пароль<input type="password" id="password" autocomplete="new-password" minlength="8" required></label><label>Ключ<input type="text" id="key" autocomplete="off" required></label><button class="button primary full" type="submit">Создать аккаунт</button><div id="msg" class="alert" role="status" aria-live="polite"></div><p>Уже есть аккаунт? <a href="/login">Войти</a></p></form></section><script src="{{ url_for('static', filename='js/register.js') }}" defer></script>{% endblock %}
+{% block content %}
+<section class="auth-page reveal">
+    <div class="auth-panel-copy">
+        <p class="eyebrow">Новый участник</p>
+        <h1>Регистрация начинается с ключа доступа.</h1>
+        <p>Используйте уникальный логин и пароль от восьми символов. Ключ будет помечен как использованный после создания аккаунта.</p>
+    </div>
+    <form id="regForm" class="form-card" aria-label="Регистрация аккаунта">
+        <div class="form-heading">
+            <span class="form-icon" aria-hidden="true">＋</span>
+            <h2>Создать аккаунт</h2>
+        </div>
+        <label class="field">Логин<input type="text" id="username" autocomplete="username" pattern="[A-Za-z0-9_.-]{3,32}" required></label>
+        <label class="field">Пароль<input type="password" id="password" autocomplete="new-password" minlength="8" required></label>
+        <label class="field">Ключ доступа<input type="text" id="key" autocomplete="off" required></label>
+        <button class="button button-dark full" type="submit">Зарегистрироваться</button>
+        <div id="msg" class="alert" role="status" aria-live="polite"></div>
+        <p class="form-note">Уже есть аккаунт? <a href="/login">Войти</a></p>
+    </form>
+</section>
+<script src="{{ url_for('static', filename='js/register.js') }}" defer></script>
+{% endblock %}

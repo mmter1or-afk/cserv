@@ -1,1 +1,20 @@
-{% extends "base.html" %}{% block title %}Администрирование — Hades{% endblock %}{% block content %}<form method="POST" class="auth-card narrow"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><h1>Администрирование</h1>{% if not admin_configured %}<div class="alert error">Задайте ADMIN_PASS в окружении перед входом.</div>{% endif %}{% if error %}<div class="alert error">{{ error }}</div>{% endif %}<label>Логин<input type="text" name="username" autocomplete="username" required></label><label>Пароль<input type="password" name="password" autocomplete="current-password" required></label><button class="button primary full" type="submit">Войти</button></form>{% endblock %}
+{% extends "base.html" %}
+{% block title %}Администрирование — Hades{% endblock %}
+{% block content %}
+<section class="auth-page admin-auth reveal">
+    <div class="auth-panel-copy">
+        <p class="eyebrow">Администрирование</p>
+        <h1>Вход для управления доступом.</h1>
+        <p>Панель показывает пользователей, ключи и выпуск новых сроков доступа.</p>
+    </div>
+    <form method="POST" class="form-card" aria-label="Вход администратора">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-heading"><span class="form-icon" aria-hidden="true">⌘</span><h2>Админ-вход</h2></div>
+        {% if not admin_configured %}<div class="alert error">Задайте ADMIN_PASS в окружении перед входом.</div>{% endif %}
+        {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+        <label class="field">Логин<input type="text" name="username" autocomplete="username" required></label>
+        <label class="field">Пароль<input type="password" name="password" autocomplete="current-password" required></label>
+        <button class="button button-dark full" type="submit">Войти</button>
+    </form>
+</section>
+{% endblock %}

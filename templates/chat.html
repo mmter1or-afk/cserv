@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 {% block title %}Чат — Hades{% endblock %}
 {% block content %}
-<section class="panel-card chat-card standalone-chat">
-  <button class="chat-header" type="button" aria-controls="chat-container" aria-expanded="true"><span>Общий чат</span><span class="toggle-icon">⌄</span></button>
-  <div id="chat-container" class="chat-container"><div id="chat-messages" class="chat-messages" aria-live="polite"></div><div class="chat-input-row"><label class="sr-only" for="message-input">Сообщение</label><input type="text" id="message-input" maxlength="800" placeholder="Напишите сообщение"><button id="send-btn" class="button primary" type="button">Отправить</button></div></div>
+<section class="chat-page reveal">
+    <div class="section-intro compact">
+        <p class="eyebrow">Общий чат</p>
+        <h1>Отдельное пространство для сообщений участников.</h1>
+    </div>
+    <article class="chat-panel standalone-chat">
+        <button class="chat-header" type="button" aria-controls="chat-container" aria-expanded="true">
+            <span><strong>Лента сообщений</strong><small>Обновляется автоматически</small></span>
+            <span class="toggle-icon" aria-hidden="true">⌄</span>
+        </button>
+        <div id="chat-container" class="chat-container">
+            <div id="chat-messages" class="chat-messages" aria-live="polite">
+                <div class="skeleton-message"><span></span><div></div></div>
+                <div class="skeleton-message short"><span></span><div></div></div>
+            </div>
+            <div class="chat-input-row">
+                <label class="sr-only" for="message-input">Сообщение</label>
+                <input type="text" id="message-input" maxlength="800" placeholder="Напишите сообщение">
+                <button id="send-btn" class="button button-dark" type="button">Отправить</button>
+            </div>
+        </div>
+    </article>
 </section>
 <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
 {% endblock %}

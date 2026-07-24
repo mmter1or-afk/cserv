@@ -1,24 +1,58 @@
 {% extends "base.html" %}
 {% block title %}Hades — портал доступа{% endblock %}
 {% block content %}
-<section class="hero-grid">
-  <div>
-    <p class="eyebrow">Закрытый кабинет</p>
-    <h1>Аккаунт, подписка и файлы доступа в одном спокойном интерфейсе.</h1>
-    <p class="lead">Портал обслуживает регистрацию по ключу, проверку активной подписки, привязку устройства и обмен сообщениями между участниками.</p>
-    <div class="hero-actions"><a class="button primary" href="/register">Создать аккаунт</a><a class="button secondary" href="/login">Войти</a></div>
-  </div>
-  <aside class="status-card" aria-label="Возможности портала">
-    <div><span class="status-dot"></span>Регистрация по одноразовому ключу</div>
-    <div><span class="status-dot"></span>Проверка срока подписки</div>
-    <div><span class="status-dot"></span>Привязка HWID при первом запуске</div>
-  </aside>
+<section class="landing-hero reveal">
+    <div class="hero-kicker"><span></span> Закрытый портал</div>
+    <div class="hero-layout">
+        <div class="hero-copy">
+            <h1>Тихое рабочее пространство для аккаунта, доступа и поддержки.</h1>
+            <p class="lead">Hades объединяет регистрацию по ключу, статус подписки, привязку устройства, профиль участника и общий чат в одном аккуратном кабинете.</p>
+            <div class="hero-actions">
+                <a class="button button-dark" href="/register">Создать аккаунт</a>
+                <a class="button button-plain" href="/login">У меня есть доступ</a>
+            </div>
+        </div>
+        <aside class="access-card" aria-label="Состояние портала">
+            <div class="access-card-top">
+                <span class="mono-label">PORTAL</span>
+                <span class="pill is-live">Доступ по ключу</span>
+            </div>
+            <div class="access-meter" aria-hidden="true"><span></span></div>
+            <dl class="access-list">
+                <div><dt>Регистрация</dt><dd>Одноразовый ключ</dd></div>
+                <div><dt>Проверка</dt><dd>Активная подписка</dd></div>
+                <div><dt>Устройство</dt><dd>HWID при первом входе</dd></div>
+            </dl>
+        </aside>
+    </div>
 </section>
-<section class="feature-grid" aria-labelledby="features-title">
-  <h2 id="features-title">Что уже есть в системе</h2>
-  <article><span>01</span><h3>Личный кабинет</h3><p>Показывает срок доступа, количество оставшихся дней, статус HWID и данные профиля.</p></article>
-  <article><span>02</span><h3>Профиль участника</h3><p>Можно задать отображаемое имя и загрузить аватар в безопасных форматах изображений.</p></article>
-  <article><span>03</span><h3>Общий чат</h3><p>Встроенный чат помогает участникам оставаться на связи прямо из кабинета.</p></article>
-  <article><span>04</span><h3>Администрирование</h3><p>Админ-панель показывает пользователей, ключи доступа и позволяет выпускать новые ключи.</p></article>
+
+<section class="workflow-section reveal" aria-labelledby="workflow-title">
+    <div class="section-intro">
+        <p class="eyebrow">Сценарии</p>
+        <h2 id="workflow-title">Интерфейс построен вокруг реальных действий.</h2>
+    </div>
+    <div class="workflow-grid">
+        <article class="workflow-item">
+            <span class="item-index">01</span>
+            <h3>Получить аккаунт</h3>
+            <p>Участник вводит логин, пароль и действующий ключ доступа. После активации ключ закрепляется за аккаунтом.</p>
+        </article>
+        <article class="workflow-item">
+            <span class="item-index">02</span>
+            <h3>Проверить состояние</h3>
+            <p>Кабинет показывает дату окончания подписки, остаток дней и статус привязки устройства.</p>
+        </article>
+        <article class="workflow-item">
+            <span class="item-index">03</span>
+            <h3>Настроить профиль</h3>
+            <p>Можно обновить отображаемое имя и загрузить аватар, чтобы сообщения в чате были узнаваемыми.</p>
+        </article>
+        <article class="workflow-item">
+            <span class="item-index">04</span>
+            <h3>Общаться</h3>
+            <p>Встроенный чат доступен из кабинета и отдельной страницы, без лишних переходов.</p>
+        </article>
+    </div>
 </section>
 {% endblock %}

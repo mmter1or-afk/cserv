@@ -16,19 +16,35 @@
     <a class="skip-link" href="#main">Перейти к содержимому</a>
     <header class="site-header">
         <nav class="nav" aria-label="Основная навигация">
-            <a href="/" class="brand"><span class="brand-mark">H</span><span>Hades</span></a>
+            <a href="/" class="brand" aria-label="Hades — главная">
+                <span class="brand-mark" aria-hidden="true">H</span>
+                <span class="brand-copy"><strong>Hades</strong><small>Access Portal</small></span>
+            </a>
             <div class="nav-links">
-                <a href="/">Обзор</a>
+                <a href="/" class="nav-item">Обзор</a>
                 {% if session.user_id %}
-                    <a href="/panel">Кабинет</a>
-                    <form method="POST" action="/logout" class="inline-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="link-button" type="submit">Выйти</button></form>
+                    <a href="/panel" class="nav-item">Кабинет</a>
+                    <a href="/chat" class="nav-item">Чат</a>
+                    <form method="POST" action="/logout" class="inline-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="nav-item link-button" type="submit">Выйти</button>
+                    </form>
                 {% else %}
-                    <a href="/login">Вход</a><a class="nav-cta" href="/register">Регистрация</a>
+                    <a href="/login" class="nav-item">Вход</a>
+                    <a class="button button-small button-dark" href="/register">Регистрация</a>
                 {% endif %}
             </div>
         </nav>
     </header>
-    <main id="main" class="page-shell">{% block content %}{% endblock %}</main>
-    <footer class="footer"><p>Hades Access Portal. Закрытая зона для действующих участников.</p></footer>
+    <main id="main" class="page-shell">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <div>
+            <strong>Hades</strong>
+            <span>Закрытая зона для действующих участников.</span>
+        </div>
+        <a href="/">Обзор</a>
+    </footer>
 </body>
 </html>

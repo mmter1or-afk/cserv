@@ -1,6 +1,57 @@
 {% extends "base.html" %}
 {% block title %}Кабинет — Hades{% endblock %}
 {% block content %}
-<section class="dashboard-head"><img src="{{ url_for('static', filename=avatar) }}" class="avatar-large" alt="Аватар {{ display_name }}"><div><p class="eyebrow">Личный кабинет</p><h1>{{ display_name }}</h1><p>Подписка до {{ expiry_str }} · осталось {{ days_left }} дн.</p></div></section>
-<section class="dashboard-grid"><article class="panel-card"><h2>Профиль</h2><dl class="meta-list"><div><dt>Логин</dt><dd>{{ user.username }}</dd></div><div><dt>HWID</dt><dd>{{ hwid }}</dd></div></dl><form action="/panel/update" method="POST" enctype="multipart/form-data" class="stack-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Отображаемое имя<input type="text" name="display_name" value="{{ display_name }}" maxlength="40"></label><label>Аватар<input type="file" name="avatar" accept="image/png,image/jpeg,image/gif"></label><button type="submit" class="button secondary">Сохранить профиль</button></form></article><article class="panel-card chat-card"><button class="chat-header" type="button" aria-controls="chat-container" aria-expanded="true"><span>Общий чат</span><span class="toggle-icon">⌄</span></button><div id="chat-container" class="chat-container"><div id="chat-messages" class="chat-messages" aria-live="polite"></div><div class="chat-input-row"><label class="sr-only" for="message-input">Сообщение</label><input type="text" id="message-input" maxlength="800" placeholder="Напишите сообщение"><button id="send-btn" class="button primary" type="button">Отправить</button></div></div></article></section><script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
+<section class="dashboard-hero reveal">
+    <div class="identity-block">
+        <img src="{{ url_for('static', filename=avatar) }}" class="avatar-large" alt="Аватар {{ display_name }}">
+        <div>
+            <p class="eyebrow">Личный кабинет</p>
+            <h1>{{ display_name }}</h1>
+            <p>Подписка до {{ expiry_str }} · осталось {{ days_left }} дн.</p>
+        </div>
+    </div>
+    <div class="dashboard-summary" aria-label="Краткая сводка">
+        <div><span>{{ days_left }}</span><small>дней доступа</small></div>
+        <div><span>{{ hwid }}</span><small>HWID</small></div>
+    </div>
+</section>
+
+<section class="dashboard-layout reveal">
+    <aside class="profile-panel">
+        <div class="panel-title">
+            <span class="line-icon" aria-hidden="true">⌁</span>
+            <h2>Профиль</h2>
+        </div>
+        <dl class="detail-list">
+            <div><dt>Логин</dt><dd>{{ user.username }}</dd></div>
+            <div><dt>Отображается как</dt><dd>{{ display_name }}</dd></div>
+            <div><dt>Устройство</dt><dd>{{ hwid }}</dd></div>
+        </dl>
+        <form action="/panel/update" method="POST" enctype="multipart/form-data" class="stack-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label class="field">Отображаемое имя<input type="text" name="display_name" value="{{ display_name }}" maxlength="40"></label>
+            <label class="field file-field">Аватар<input type="file" name="avatar" accept="image/png,image/jpeg,image/gif"><span>PNG, JPG или GIF</span></label>
+            <button type="submit" class="button button-plain full">Сохранить изменения</button>
+        </form>
+    </aside>
+
+    <article class="chat-panel">
+        <button class="chat-header" type="button" aria-controls="chat-container" aria-expanded="true">
+            <span><strong>Общий чат</strong><small>Сообщения участников</small></span>
+            <span class="toggle-icon" aria-hidden="true">⌄</span>
+        </button>
+        <div id="chat-container" class="chat-container">
+            <div id="chat-messages" class="chat-messages" aria-live="polite">
+                <div class="skeleton-message"><span></span><div></div></div>
+                <div class="skeleton-message short"><span></span><div></div></div>
+            </div>
+            <div class="chat-input-row">
+                <label class="sr-only" for="message-input">Сообщение</label>
+                <input type="text" id="message-input" maxlength="800" placeholder="Напишите сообщение">
+                <button id="send-btn" class="button button-dark" type="button">Отправить</button>
+            </div>
+        </div>
+    </article>
+</section>
+<script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
 {% endblock %}

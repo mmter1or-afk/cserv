@@ -1,3 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Вход — Hades{% endblock %}
-{% block content %}<section class="auth-layout"><div class="auth-copy"><p class="eyebrow">Авторизация</p><h1>Войдите, чтобы проверить статус доступа.</h1><p>Сессия защищена HTTP-only cookie и завершается кнопкой выхода.</p></div><form method="POST" class="auth-card"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><h2>Вход</h2>{% if error %}<div class="alert error">{{ error }}</div>{% endif %}<label>Логин<input type="text" name="username" autocomplete="username" required></label><label>Пароль<input type="password" name="password" autocomplete="current-password" required></label><button class="button primary full" type="submit">Войти</button><p>Нет аккаунта? <a href="/register">Зарегистрироваться</a></p></form></section>{% endblock %}
+{% block content %}
+<section class="auth-page reveal">
+    <div class="auth-panel-copy">
+        <p class="eyebrow">Возвращение</p>
+        <h1>Войдите в кабинет без лишнего шума.</h1>
+        <p>После входа откроется состояние подписки, профиль и общий чат участников.</p>
+    </div>
+    <form method="POST" class="form-card" aria-label="Вход в аккаунт">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-heading">
+            <span class="form-icon" aria-hidden="true">↳</span>
+            <h2>Вход</h2>
+        </div>
+        {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+        <label class="field">Логин<input type="text" name="username" autocomplete="username" required></label>
+        <label class="field">Пароль<input type="password" name="password" autocomplete="current-password" required></label>
+        <button class="button button-dark full" type="submit">Продолжить</button>
+        <p class="form-note">Нет аккаунта? <a href="/register">Зарегистрироваться по ключу</a></p>
+    </form>
+</section>
+{% endblock %}
