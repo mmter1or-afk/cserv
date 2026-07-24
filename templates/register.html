@@ -1,45 +1,59 @@
 {% extends "base.html" %}
-{% block title %}Регистрация{% endblock %}
+{% block title %}Register{% endblock %}
 {% block content %}
 <div class="auth-card">
-    <h2>Создание аккаунта</h2>
+    <h2>Create Account</h2>
     <form id="regForm">
         <div class="input-group">
-            <input type="text" id="username" placeholder="Логин" required>
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="3-32 characters" required minlength="3" maxlength="32" pattern="[a-zA-Z0-9_-]+" title="Only letters, numbers, hyphens, and underscores">
         </div>
         <div class="input-group">
-            <input type="password" id="password" placeholder="Пароль" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="At least 8 characters" required minlength="8" maxlength="128">
         </div>
         <div class="input-group">
-            <input type="text" id="key" placeholder="Ключ доступа" required>
+            <label for="key">Access Key</label>
+            <input type="text" id="key" placeholder="Enter your access key" required>
         </div>
-        <button type="submit" class="btn-blood">Зарегистрироваться</button>
+        <button type="submit" class="btn-blood">Register</button>
         <div id="msg" class="msg"></div>
     </form>
-    <p class="auth-link">Уже есть аккаунт? <a href="/login">Войти</a></p>
+    <p class="auth-link">Already have an account? <a href="/login">Login</a></p>
 </div>
+
 <script>
 document.getElementById('regForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const msg = document.getElementById('msg');
     msg.className = '';
-    msg.textContent = 'Регистрация...';
-    const res = await fetch('/register', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            username: document.getElementById('username').value,
-            password: document.getElementById('password').value,
-            key: document.getElementById('key').value
-        })
-    });
-    const data = await res.json();
-    if (data.error) {
+    msg.textContent = 'Processing...';
+    
+    try {
+        const res = await fetch('/register', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                key: document.getElementById('key').value
+            })
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok) {
+            msg.className = 'success';
+            msg.textContent = 'Registration successful! Redirecting to login...';
+            setTimeout(() => window.location.href = '/login', 2000);
+        } else {
+            msg.className = 'error';
+            msg.textContent = 'Error: ' + (data.error || 'Registration failed');
+        }
+    } catch (error) {
         msg.className = 'error';
-        msg.textContent = 'Ошибка: ' + data.error;
-    } else {
-        msg.className = 'success';
-        msg.textContent = 'Успешно! Теперь войдите.';
+        msg.textContent = 'Network error. Please try again.';
     }
 });
 </script>
+{% endblock %}
