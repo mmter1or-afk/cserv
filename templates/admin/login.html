@@ -1,17 +1,19 @@
 {% extends "base.html" %}
-{% block title %}Админ-панель{% endblock %}
+{% block title %}Admin Login{% endblock %}
 {% block content %}
 <div class="auth-card">
-    <h2>Администрирование</h2>
+    <h2>Administration</h2>
     {% if error %}<div class="error">{{ error }}</div>{% endif %}
     <form method="POST">
         <div class="input-group">
-            <input type="text" name="username" placeholder="Логин" required>
+            <label for="username">Administrator</label>
+            <input type="text" id="username" name="username" placeholder="Admin username" required>
         </div>
         <div class="input-group">
-            <input type="password" name="password" placeholder="Пароль" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Admin password" required>
         </div>
-        <button type="submit" class="btn-blood">Войти</button>
+        <button type="submit" class="btn-blood">Login</button>
     </form>
 </div>
 {% endblock %}
